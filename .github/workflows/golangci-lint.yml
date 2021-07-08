@@ -1,42 +1,18 @@
-name: reviewdog-suggester
-on: [pull_request] # Support only pull_request event.
+name: reviewdog
+on: [pull_request]
 jobs:
-  go:
-    name: runner / suggester / gofmt
+  golangci-lint:
+    name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: gofmt -w -s .
-      - uses: reviewdog/action-suggester@v1
-        with:
-          tool_name: gofmt
-  shell:
-    name: runner / suggester / shell
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-      - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
-        id: ACTIONS_ALLOW_UNSECURE_COMMANDS
-        run: echo 'ACTIONS_ALLOW_UNSECURE_COMMANDS=true' >> $GITHUB_ENV
-      - run: echo ::add-path::$(go env GOPATH)/bin
-      - run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
 
-      - run: shfmt -i 2 -ci -w .
-      - name: suggester / shfmt
-        uses: reviewdog/action-suggester@v1
+      # optionally use a specific version of Go rather than the default one
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          tool_name: shfmt
+          go-version: '1.16'
 
-      # Need to install latest shellcheck to use diff output format as of writing (2020/08/03).
-      - name: install shellcheck
-        run: |
-          scversion="latest"
-          wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
-          sudo cp "shellcheck-${scversion}/shellcheck" /usr/local/bin/
-          rm -rf "shellcheck-${scversion}/shellcheck"
-      - run: shellcheck -f diff $(shfmt -f .) | patch -p1
-      - name: suggester / shellcheck
-        uses: reviewdog/action-suggester@v1
-        with:
-          tool_name: shellcheck
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v1
