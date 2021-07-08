@@ -9,7 +9,7 @@ on:
       - develop
   pull_request:
 jobs:  
-  lint:
+  linter:
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
@@ -26,9 +26,9 @@ jobs:
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v2.5.2
 
-  test:
+  tests:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: linter
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
@@ -42,4 +42,7 @@ jobs:
         run: go mod download && go get github.com/alecthomas/template@v0.0.0-20190718012654-fb15b899a751
 
       - name: Test
-        run: go test --short ./...
+        run: |
+          go test --short -coverprofile=cover.out -v ./...
+          go tool cover -func=cover.out
+          
