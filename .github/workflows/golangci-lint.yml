@@ -10,7 +10,7 @@ jobs:
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
-          golangci_lint_flags: "--enable-all --exclude-use-default=false"
+          golangci_lint_flags: "--enable-all"
 
   tests:
     runs-on: ubuntu-latest
