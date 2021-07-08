@@ -30,7 +30,7 @@ jobs:
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v2.5.2
       with:
-          version: ${{ env.GOLANG_LINT_VERSION }}
+          version: v1.29
           args: -D errcheck
 
   tests:
