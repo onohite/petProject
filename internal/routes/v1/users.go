@@ -10,5 +10,5 @@ func (h *Handler) initUsersRoutes(api *gin.RouterGroup) {
 }
 
 func (h *Handler) GetUsers(c *gin.Context) {
-
+	c.Status(200)
 }

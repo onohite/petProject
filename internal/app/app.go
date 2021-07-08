@@ -24,10 +24,11 @@ func Run() {
 	cfg := config.Init()
 
 	log.SetFormatter(&log.TextFormatter{ForceColors: true, ForceQuote: true})
-	if cfg.ServerMode == config.Prod {
-		log.SetLevel(log.InfoLevel)
-	} else {
+
+	if cfg.ServerMode != config.Prod {
 		log.SetLevel(log.DebugLevel)
+	} else {
+		log.SetLevel(log.InfoLevel)
 	}
 
 	handler := routes.NewHandler()
