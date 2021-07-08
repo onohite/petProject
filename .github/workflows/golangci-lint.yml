@@ -39,7 +39,7 @@ jobs:
           # skip-build-cache: true
   test:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: golangci
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
