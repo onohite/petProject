@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Setup Env
-        run: go mod download && go get github.com/alecthomas/template@v0.0.0-20190718012654-fb15b899a751
+        run: go mod download
 
       - name: Test
         run: |
