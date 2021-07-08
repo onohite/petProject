@@ -28,8 +28,7 @@ jobs:
       run: |
           go mod download
           go generate
-          go get github.com/cpuguy83/go-md2man/v2@v2.0.0
-          go mod tidy
+          go mod download github.com/cpuguy83/go-md2man
       
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v2.5.2
