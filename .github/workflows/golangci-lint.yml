@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Setup Env
-      run: go mod download && go mod download github.com/cpuguy83/go-md2man
+      run: go mod download && go get github.com/cpuguy83/go-md2man
       
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v2.5.2
