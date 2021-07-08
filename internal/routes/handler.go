@@ -3,7 +3,6 @@ package routes
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/swag/example/basic/docs"
@@ -40,7 +39,8 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 
 	// Init router
 	router.GET("/ping", func(c *gin.Context) {
-		log.Info("hello")
+		var a int
+		a = a + 1
 		c.String(http.StatusOK, "pong")
 	})
 
