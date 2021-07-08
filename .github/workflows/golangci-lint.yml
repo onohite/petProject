@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
+        with: 
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       - run: echo ::add-path::$(go env GOPATH)/bin
       - run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
 
