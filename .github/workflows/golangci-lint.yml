@@ -37,6 +37,9 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Setup Env
+        run: go mod download github.com/cpuguy83/go-md2man/v2
 
       - name: Test
         run: go test --short ./...
