@@ -1,48 +1,39 @@
-name: golangci-lint
-on:
-#  push:
-#    tags:
-#      - v*
-#    branches:
-#      - master
-#      - main
-#      - develop
-  pull_request:
-jobs:  
-  golangci-lint:
+name: reviewdog-suggester
+on: [pull_request] # Support only pull_request event.
+jobs:
+  go:
+    name: runner / suggester / gofmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: gofmt -w -s .
+      - uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: gofmt
+  shell:
+    name: runner / suggester / shell
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
+      - run: echo ::add-path::$(go env GOPATH)/bin
+      - run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+
+      - run: shfmt -i 2 -ci -w .
+      - name: suggester / shfmt
+        uses: reviewdog/action-suggester@v1
         with:
-          stable: 'false'
-          go-version: '1.16.3'
+          tool_name: shfmt
 
-      - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v1
-#      - name: Lint
-#        run: |
-#          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
-#
-#          golangci-lint run
-
-  tests:
-    runs-on: ubuntu-latest
-    needs: golangci-lint
-    steps:
-      - name: Install Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.16.3
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Env
-        run: go mod download
-
-      - name: Test
+      # Need to install latest shellcheck to use diff output format as of writing (2020/08/03).
+      - name: install shellcheck
         run: |
-          go test --short -coverprofile=cover.out -v ./...
-          go tool cover -func=cover.out
-          
+          scversion="latest"
+          wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
+          sudo cp "shellcheck-${scversion}/shellcheck" /usr/local/bin/
+          rm -rf "shellcheck-${scversion}/shellcheck"
+      - run: shellcheck -f diff $(shfmt -f .) | patch -p1
+      - name: suggester / shellcheck
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: shellcheck
