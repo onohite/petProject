@@ -41,7 +41,7 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 	router.GET("/ping", func(c *gin.Context) {
 		var a int
 		a = a + 1
-		c.String(http.StatusOK, "pong")
+		c.String(http.StatusOK, "pong                ")
 	})
 
 	h.initAPI(router)
