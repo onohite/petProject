@@ -37,7 +37,6 @@ jobs:
         run: |
           npx textlint -f checkstyle  README.md >> .textlint.log
       - name: Run reviewdog
-        if: failure()
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
