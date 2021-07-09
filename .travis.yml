@@ -7,7 +7,8 @@ install:
   - mkdir -p ~/bin/ && export PATH="~/bin/:$PATH"
   - curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b ~/bin
   - go get -u golang.org/x/lint/golint
+  - npm install --save-dev textlint textlint-rule-no-mix-dearu-desumasu
 
 script:
   - >-
-    golint ./... && reviewdog -f=golint -reporter=github-pr-check
+    npx textlint -f checkstyle  README.md >> .textlint.log && reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-check
