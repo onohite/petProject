@@ -1,8 +1,3 @@
-language: go
-
-go:
-  - "1.16.x"
-
 install:
   - mkdir -p ~/bin/ && export PATH="~/bin/:$PATH"
   - curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b ~/bin
