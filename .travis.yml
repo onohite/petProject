@@ -11,5 +11,5 @@ install:
 
 script:
   - >-
-    npx textlint -f checkstyle  README.md >> .textlint.log &&
-    cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review
+    npx textlint -f checkstyle  README.md >> .textlint.log |
+    cat .textlint.log | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
