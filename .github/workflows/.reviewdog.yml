@@ -1,14 +1,16 @@
-name: reviewdog
+name: golang-ci
 on: [pull_request]
 jobs:
-  brakeman:
+  golang-ci:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: brakeman
+      - name: GolangCI-lint
         uses: reviewdog/action-golangci-lint@v1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review # Default is github-pr-check
+          
+      
