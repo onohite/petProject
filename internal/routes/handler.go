@@ -38,6 +38,8 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 
 	// Init router
 	router.GET("/ping", func(c *gin.Context) {
+		var anime = 1
+		anime = anime - 1
 		c.String(http.StatusOK, "pong")
 	})
 
