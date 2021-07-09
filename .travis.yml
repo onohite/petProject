@@ -10,4 +10,4 @@ install:
 
 script:
   - >-
-    golint ./... && reviewdog -f=golint -reporter=gitlab-mr-discussion
+    golint ./... && reviewdog -f=golint -reporter=github-pr-check
