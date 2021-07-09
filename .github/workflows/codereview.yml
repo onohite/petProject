@@ -1,0 +1,44 @@
+  
+# This is a basic workflow to help you get started with Actions
+
+name: reviewdog
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  reviewdog-github-check:
+    name: reviewdog (github-check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+      - uses: actions/setup-node@v2
+
+      - uses: actions/checkout@v2
+
+      - name: Install textlint
+        run:  'npm install --save-dev textlint textlint-rule-no-mix-dearu-desumasu'
+      
+      - name: Install dependent module
+        run: npm install
+
+      - name: Install reviewdog
+        # use: reviewdog/action-setup@v1
+        run: |
+          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s
+      - name: Execute textlint for README.md
+        run: |
+          npx textlint -f checkstyle  README.md >> .textlint.log
+      - name: Run reviewdog
+        if: failure()
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat .textlint.log | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
