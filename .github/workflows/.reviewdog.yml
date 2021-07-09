@@ -11,7 +11,7 @@ jobs:
         uses: reviewdog/action-golangci-lint@v1
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check #github-pr-review  Default is github-pr-check
+          reporter: github-pr-review  #Default is github-pr-check
   staticcheck:
     name: runner / staticcheck
     runs-on: ubuntu-latest
