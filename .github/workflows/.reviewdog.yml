@@ -20,7 +20,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Staticcheck
-        uses: reviewdog/action-golangci-lint@v1
+        uses: reviewdog/action-staticcheck@v1
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -29,4 +29,3 @@ jobs:
           filter_mode: nofilter
           # Exit with 1 when it find at least one finding.
           fail_on_error: false
-      
