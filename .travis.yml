@@ -4,12 +4,9 @@ go:
   - "1.16.x"
   
 install:
-  - go install ./cmd/reviewdog
-  # Install linters.
-  - cd linters
-  - go get golang.org/x/lint/golint
-  - cd -
-  - npm install
+  - mkdir -p ~/bin/ && export PATH="~/bin/:$PATH"
+  - curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b ~/bin
 
 script:
-  - golint ./... | reviewdog -f=golint -name=golint-travis -reporter=github-pr-check
+  - >-
+    golint ./... | reviewdog -f=golint -reporter=github-pr-review
