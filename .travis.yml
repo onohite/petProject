@@ -8,7 +8,8 @@ install:
   - curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b ~/bin
   - go get -u golang.org/x/lint/golint
   - npm install --save-dev textlint textlint-rule-no-mix-dearu-desumasu
+  - npx textlint -f checkstyle  README.md >> .textlint.log
 
 script:
   - >-
-    npx textlint -f checkstyle  README.md >> .textlint.log && reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-check
+    cat .textlint.log && reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-check
