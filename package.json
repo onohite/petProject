@@ -1,0 +1,24 @@
+{
+  "name": "textlint-reviewdog-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/circleci-book/textlint-reviewdog-sample.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/circleci-book/textlint-reviewdog-sample/issues"
+  },
+  "homepage": "https://github.com/circleci-book/textlint-reviewdog-sample#readme",
+  "devDependencies": {
+    "textlint": "^11.3.1",
+    "textlint-rule-no-mix-dearu-desumasu": "^4.0.0"
+  }
+}
