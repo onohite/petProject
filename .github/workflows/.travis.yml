@@ -1,7 +1,15 @@
 language: go
 
 go:
-- 1.x
-- "1.10"
-- 1.11.x
-- master
+  - "1.16.x"
+  
+install:
+  - go install ./cmd/reviewdog
+  # Install linters.
+  - cd linters
+  - go get golang.org/x/lint/golint
+  - cd -
+  - npm install
+
+script:
+  - golint ./... | reviewdog -f=golint -name=golint-travis -reporter=github-pr-check
