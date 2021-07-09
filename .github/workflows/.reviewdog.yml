@@ -32,10 +32,10 @@ jobs:
   go-suggestion:
     name: runner / suggester / gofmt
     runs-on: ubuntu-latest
-    needs: staticcheck
+    # needs: staticcheck
     steps:
       - uses: actions/checkout@v2
-      - run: gofmt -w -s .
+      - run: go fmt -s .
       - uses: reviewdog/action-suggester@v1
         with:
           tool_name: gofmt
